@@ -13,13 +13,12 @@ class Orbiter(pygame.sprite.Sprite):
 	def computeLRL(self):
 		self.angularMomentum = self.position.cross(self.velocity)
 		self.LRL = self.velocity.coCross(self.angularMomentum) - self.gravity * self.position / self.position.abs()
-		
+		self.sweptArea = self.position.abs2() * self.angularMomentum / self.position.abs()
 
-	def physicsUpdate(self,dv = 0, dt = .1):
+	def physicsUpdate(self,dv = 0, dt = .001):
 		self.velocity += dv
-		if (dv!=0):
-			self.computeLRL()
-		th = self.position.arg() + dt * self.angularMomentum / self.position.abs()
+		#self.computeLRL()
+		th = self.position.arg() + dt * self.sweptArea / self.position.abs2()
 		self.position.setP(self.getRadius(th),th)
 		
 	def getRadius(self,th):
