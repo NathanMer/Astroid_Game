@@ -9,6 +9,7 @@ from Missile import *
 from DumbMissile import *
 from Connection import *
 from Server import *
+from NPCShip import *
 from multiprocessing import Process, Pipe
 
 import time
