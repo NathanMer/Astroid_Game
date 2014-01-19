@@ -32,6 +32,8 @@ name = raw_input("Name? [10 Character]")
 ip = raw_input("What Ip?")
 while not client.pickName(ip, 9000, name):
 	name = raw_input("Other Name? [10 Character]")
+	if rep == "y":
+		serve.recieve()
 
 
 
