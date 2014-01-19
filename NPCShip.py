@@ -3,7 +3,7 @@ from Orbiter import *
 import math
 
 class NPCShip(pygame.sprite.Sprite):
-	def __init__(self, name, x, y, rot, fire, img, imgFire):
+	def __init__(self, name, x, y, rot, fire):
 		pygame.sprite.Sprite.__init__(self)
 		self.name = name
 		self.image = pygame.image.load("images/redShip.png")
