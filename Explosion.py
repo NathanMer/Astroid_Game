@@ -1,12 +1,17 @@
 import pygame, math
+from Vector import *
 
 class Explosion(pygame.sprite.Sprite):
 	def __init__(self, p):
 		pygame.sprite.Sprite.__init__(self)
 		self.image = pygame.image.load("images/missileExplosion.png")
-		self.image = pygame.transform.scale(self.image, (50, 50))
+		self.image = pygame.transform.scale(self.image, (60, 60))
 		self.rect = self.image.get_rect(center=p)
+		self.x, self.y = p
 		self.counter = 30
+
+	def inside(self, p):
+		return (Vector(p[0], p[1]) - Vector(self.x, self.y)).abs() < 60
 
 	def update(self):
 		self.counter -= 1

@@ -14,8 +14,28 @@ ROTSPEED = 3.0
 THRUST = 0.1
 CENTER = (500, 500)
 G = 50000
+TRIGGER = 30
 
 # startV
+
+
+def hitBy(p, missiles, triggerRange):
+	inRange = []
+	out = []
+	for sp in missiles.sprites():
+		if sp.inside(p):
+			inRange.append(sp)
+
+	if not len(inRange):
+		return False
+
+	for sp in inRange:
+		missiles.remove(sp)
+		out.append(sp.rect.center)
+	return out
+
+
+
 
 
 pygame.init()
@@ -79,6 +99,13 @@ while True:
 
 
 	playerGroup.update(pressed, mouseLoc, mouseDown)
+
+	hits = hitBy(player.p, myMissiles, TRIGGER)
+
+	if hits:
+		for p in hits:
+			explosions.add(Explosion(p))
+
 	
 	if player.new:
 		m = player.out
