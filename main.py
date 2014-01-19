@@ -11,7 +11,7 @@ from Connection import *
 from Server import *
 from multiprocessing import Process, Pipe
 
-
+import time
 import pygame
 import os, sys
 
@@ -25,43 +25,48 @@ TRIGGER = 30
 ###############
 #networking constants
 
-def namePick(ip,port,name, client, conn):
-	conn.send(client.pickName(ip,port,name))
+def namePick(ip,port,name, client, childPipe):
+	print "hi"
+	a = client.pickName(ip,port,name)
+	print a
+	childPipe.send(a)
 	conn.close()
 
 
-rep = raw_input("server? [Y, N]")
-if rep =="y":
-	serve = Server(9000)
+# rep = raw_input("server? [Y, N]")
+# if rep =="y":
+# 	serve = Server(9000)
 client = Connection()
 name = raw_input("Name? [10 Character]")
 ip = raw_input("What Ip?")
 
-if rep =="y": 
-	parent, child = Pipe()
-	t = Process(target=namePick, name="SecondThread", args=(ip, 9000, name, client, child))
+# if rep =="y": 
+# 	parent, child = Pipe()
+# 	t = Process(target=namePick, name="SecondThread", args=(ip, 9000, name, client, child))
 
-	t.start()
-	serve.recieve()
-	t.join(timeout=3)
-	flag = parent.recv()
-else:
-	flag = client.pickName(ip,9000,name)
+# 	t.start()
+# 	time.sleep(2)
+# 	print serve.recieve()
+# 	t.join(timeout=3)
+# 	flag = parent.recv()
+# else:
+flag = client.pickName(ip,9000,name)
 
 while not flag:
 	name = raw_input("Other Name? [10 Character]")
-	if rep == "y":
-		parent, child = Pipe()
-		t = Process(target=namePick, name="SecondThread", args=(ip, port, name, client, child))
+	# if rep == "y":
+	# 	parent, child = Pipe()
+	# 	t = Process(target=namePick, name="SecondThread", args=(ip, port, name, client, child))
 
-		t.start()
-		serve.recieve()
-		t.join(timeout=3)
-		flag = parent.recv()
-	else:
-		flag = client.pickName(ip,9000,name)
+	# 	t.start()
+	# 	time.sleep(2)
+	# 	serve.recieve()
+	# 	t.join(timeout=3)
+	# 	flag = parent.recv()
+	# else:
+	flag = client.pickName(ip,9000,name)
 
-
+print client.name
 
 
 
@@ -131,6 +136,9 @@ while True:
 
 	data = client.recieve()
 
+	if not data:
+		data = []
+
 	for event in data:
 		if event["type"] == "L":
 			name = event["name"]
@@ -162,8 +170,8 @@ while True:
 		
 			pygame.quit()
 
-			if rep =="y":
-				serve.close()
+			# if rep =="y":
+			# 	serve.close()
 
 			client.close()
 			sys.exit()
@@ -271,7 +279,7 @@ while True:
 		client.sendLocation(x,y, True, player.rotation)
 
 	
-
-	serve.recieve()
+	# if rep == "y":
+	# 	serve.recieve()
 	gameClock.tick(60)
 	
