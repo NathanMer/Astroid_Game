@@ -21,9 +21,9 @@ class Server():
         for user in self.users:
             data = self.getData(user)
             if (data != ""):
-                self.send(data)
-            data = parse(data)
-            allData.append(data[0])
+                self.send(data, user)
+                data = parse(data)
+                allData.append(data[0])
         return allData
 
     def getNewConnections(self):
@@ -54,10 +54,12 @@ class Server():
         return data
 
     ########################### SEND #######################################
-    def send(self, data):
+    def send(self, data, no=None):
         """Sends data to all users"""
         try:
             for user in self.users:
+                if (user == no):
+                    continue
                 self.users[user].sendall(data)
         except socket.error:
             pass
