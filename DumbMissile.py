@@ -20,8 +20,8 @@ class DumbMissile(pygame.sprite.Sprite):
 
 		self.image = pygame.image.load("images/missile.png")
 		self.image = pygame.transform.scale(self.image, (20, 40))
-		self.image = pygame.transform.rotate(self.image, math.degrees(self.rotation) + self.adjust)
-		self.rect = self.image.get_rect()
+		self.image = pygame.transform.rotate(self.image, self.rotation + self.adjust)
+		self.rect = self.image.get_rect(center=self.p)
 
 	def inside(self, pos):
 		return (Vector(pos[0], pos[1]) - Vector(self.p[0], self.p[1])).abs() < self.trigger and self.armed

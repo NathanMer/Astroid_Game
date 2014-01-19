@@ -152,7 +152,7 @@ while True:
 
 
 		if event["type"] == "S":
-			otherMissiles.add(DumbMissile(event['x'], event['y'], event['rotation'], event['burning']))
+			otherMissiles.add(DumbMissile(int(event['x']), int(event['y']), int(event['rotation']), event['burning']))
 			#create a dumb missile, check  for collisions later
 
 		if event["type"] == "E":
@@ -284,7 +284,7 @@ while True:
 	frame += 1
 	x, y = player.rect.center
 	client.sendLocation(int(x),int(y), True, int(math.degrees(player.rotation))%360)
-	
+
 
 	
 	# if rep == "y":
