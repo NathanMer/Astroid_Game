@@ -180,7 +180,15 @@ while True:
 			pressed.append(event.key)
 
 		elif event.type == pygame.KEYUP:
-			pressed.remove(event.key)
+			try:
+				pressed.remove(event.key)
+			except:
+				pass
+
+			try:
+				pressed.remove(event.key)
+			except:
+				pass
 
 
 		elif event.type == pygame.MOUSEBUTTONDOWN:
