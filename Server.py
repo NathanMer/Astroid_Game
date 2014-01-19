@@ -18,15 +18,18 @@ class Server():
     def recieve(self):
         """Recieves connections from new users and data from others"""
         self.getNewConnections()
+        toRemove = []
         for user in self.users:
             data = self.getData(user)
             if (data != ""):
                 self.send(data, user)
-                print data
                 data = parse(data)
                 for d in data:
                     if d["type"] == "R":
-                        self.users.pop(d["name"])
+                        toRemove.append(d["name"])
+        for rm in toRemove:
+            if (rm in self.users):
+                self.users.pop(rm)
 
     def getNewConnections(self):
         """Checks for new users and connects with them"""
