@@ -3,6 +3,7 @@ from Vector import *
 from Orbiter import *
 from MyShip import *
 from Planet import *
+from plus import *
 # from Asteroid import *
 from Missile import *
 import pygame
@@ -86,6 +87,10 @@ while True:
 	playerGroup.draw(screen)
 	myMissiles.draw(screen)
 	
+	drawPlus(screen, CENTER[0]+player.getApoapsis().x, CENTER[1]+player.getApoapsis().y, (255,255,0))
+        drawPlus(screen, CENTER[0]+player.getPeriapsis().x, CENTER[1]+player.getPeriapsis().y, (0,255,255))
+
+
 	pygame.display.flip()
 
 
