@@ -1,9 +1,9 @@
-import pygame
+import pygame, math
 from Orbiter import *
-import math
+from Vector import *
 
-class NPCShip(Orbiter):
-	def __init__(self, name, x, y, rot, fire, img, imgFire):
+class DumbMissile(Orbiter):
+	def __init__(self, x, y, rot, fire, img, imgFire):
 		self.name = name
 		self.image = pygame.image.load("images/redShip.png")
 		self.image = pygame.transform.scale(self.image, (20, 20))
@@ -19,6 +19,3 @@ class NPCShip(Orbiter):
 
 		self.image = pygame.transform.rotate(self.original, rot)
 		self.rect = self.image.get_rect(center=(x, y))
-
-	# def update():
-		

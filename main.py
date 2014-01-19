@@ -2,13 +2,14 @@
 from Vector import *
 from Orbiter import *
 from MyShip import *
+from Planet import *
 # from Asteroid import *
 # from Missile import *
 import pygame
 import os, sys
 
 ROTSPEED = 3.0
-THRUST = 1.0
+THRUST = 0.1
 CENTER = (350, 350)
 G = 50000
 # startV
@@ -29,11 +30,14 @@ gameClock = pygame.time.Clock()
 
 
 player = MyShip(CENTER, ROTSPEED, THRUST, G)
+pl = Planet(350, 350)
 
-playerGroup = pygame.sprite.RenderPlain((player))
+playerGroup = pygame.sprite.RenderPlain(player, pl)
+# centerGroup = pygame.sprite.RenderPlain((planet))
+# playerGroup.add(pl)
 
-#other ships
-#missiles
+NPC = {}
+missiles =[]
 
 pressed = []
 mouseLoc = (0,0)
@@ -67,19 +71,22 @@ while True:
 
 	mouseLoc = pygame.mouse.get_pos()
 
-	# print "got input"
 
-	#do physics
-
-	# update sprites
 
 	playerGroup.update(pressed, mouseLoc, mouseDown)
+	# centerGroup.update(pressed)
 
 	screen.blit(background, (0, 0))
 	playerGroup.draw(screen)
+	# pl.draw(screen)
 	pygame.display.flip()
 
 
-	# frame += 1
-	gameClock.tick(6)
+	frame += 1
+	if not (frame%3):
+		#send networking stuff
+		pass
+
+		# do networking stuff
+	gameClock.tick(60)
 	

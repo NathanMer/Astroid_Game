@@ -7,12 +7,14 @@ RAD = 0.017453292519943295
 
 class MyShip(Orbiter):
 	def __init__(self, center, rotSpeed, thrust, g):
-		Orbiter.__init__(self, Vector(100, 0), Vector(0, 50), g)
+		Orbiter.__init__(self, Vector(100, 0), Vector(0, -20), g)
 		self.timer = None
 		self.down = False
-		self.image = pygame.image.load("images/missileExplosion.png")#blueShip.png")
+		self.rotSpeed = rotSpeed
+		self.image = pygame.image.load("images/blueShip.png")
+		self.image = pygame.transform.scale(self.image, (20, 45))
+		self.image = pygame.transform.rotate(self.image, 90)
 		self.original = self.image
-		self.image = pygame.transform.scale(self.original, (20, 20))
 		self.rect = self.image.get_rect()
 		self.thrust = thrust
 		self.center = center
@@ -28,8 +30,8 @@ class MyShip(Orbiter):
 			self.rotation -= RAD * self.rotSpeed
 
 		c = self.rect.center
-		self.image = pygame.transform.rotate(self.image, (self.lastRot - self.rotation))
-		self.lastRot = self.rotation
+		self.image = pygame.transform.rotate(self.original, math.degrees(self.rotation))
+		# self.lastRot = self.rotation
 		self.rect = self.image.get_rect(center=c)
 	
 
