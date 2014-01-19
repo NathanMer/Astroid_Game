@@ -13,7 +13,7 @@ class NPCShip(pygame.sprite.Sprite):
 		self.fireImg = pygame.image.load("images/missileFire.png")
 		
 
-	def changeValues(x, y, rot, fire):
+	def changeValues(self, x, y, rot, fire):
 		self.x = x
 		self.y = y
 		self.rot = rot
