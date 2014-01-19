@@ -7,7 +7,7 @@ class Server():
     def __init__(self, HOST, PORT):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.setblocking(False)
-        self.s.bind((HOST, PORT))
+        self.s.bind((self.getip(), PORT))
         self.s.listen(1)
         print "Listening"
 
@@ -85,3 +85,10 @@ class Server():
         for user in self.users:
             self.users[user].close()
         self.s.close()
+
+    ########################### GETIP ######################################
+    def getip(self):
+        test = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        test.connect(("http://www.google.com", 80))
+        host = test.getsockname()[0]
+        return host
