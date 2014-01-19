@@ -12,8 +12,9 @@ import os, sys
 
 ROTSPEED = 3.0
 THRUST = 0.1
-CENTER = (350, 350)
+CENTER = (500, 500)
 G = 50000
+
 # startV
 
 
@@ -32,11 +33,12 @@ gameClock = pygame.time.Clock()
 
 
 player = MyShip(CENTER, ROTSPEED, THRUST, G, 20)
-pl = Planet(350, 350)
+pl = Planet(CENTER[0], CENTER[1])
 
 playerGroup = pygame.sprite.RenderPlain(player, pl)
 myMissiles = pygame.sprite.RenderPlain()
 explosions = pygame.sprite.RenderPlain()
+newExplo = []
 # centerGroup = pygame.sprite.RenderPlain((planet))
 # playerGroup.add(pl)
 
@@ -85,6 +87,18 @@ while True:
 	if player.explode:
 		player.explode = False
 		explosions.add(Explosion(player.p))
+
+	for sp in myMissiles:
+
+		if sp.explode:
+			newExplo.append(sp)
+
+	for sp in newExplo:
+		myMissiles.remove(sp)
+		e = Explosion(sp.p)
+		explosions.add(e)
+
+	newExplo = []
 
 	myMissiles.update()
 	explosions.update()
