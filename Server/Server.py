@@ -4,7 +4,7 @@ from Conversion import *
 
 class Server():
     """Runs the Server"""
-    def __init__(self, HOST, PORT):
+    def __init__(self, PORT):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.setblocking(False)
         self.s.bind((self.getip(), PORT))
@@ -89,6 +89,6 @@ class Server():
     ########################### GETIP ######################################
     def getip(self):
         test = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        test.connect(("http://www.google.com", 80))
+        test.connect(("google.com", 80))
         host = test.getsockname()[0]
         return host
