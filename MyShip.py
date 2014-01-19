@@ -8,8 +8,7 @@ RAD = 0.017453292519943295
 
 class MyShip(Orbiter):
 	def __init__(self, center, rotSpeed, thrust, g, surface):
-		b = random.randint(100, 300)
-		Orbiter.__init__(self, Vector(400-b, 0), Vector(0, -(3000/b)), g)
+		Orbiter.__init__(self, Vector(random.randint(100, 300), 0), Vector(0, -20), g)
 
 		self.timer = None
 		self.down = False
