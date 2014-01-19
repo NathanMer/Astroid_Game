@@ -18,7 +18,9 @@ pygame.display.flip()
 
 window.set_at((200,200),white)
 
-ship = Orbiter.Orbiter(Vector.Vector(100,0), Vector.Vector(0, 10), 50)
+ship = Orbiter.Orbiter(Vector.Vector(100,0), Vector.Vector(0, 20), 50000)
+
+print ship.LRL.abs(), ship.LRL.arg()
 
 tVect = Vector.Vector(0,0)
 
