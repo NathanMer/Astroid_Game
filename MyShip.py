@@ -1,6 +1,7 @@
 import pygame, math
 from Vector import *
 from Orbiter import *
+from Missile import *
 
 
 RAD = 0.017453292519943295
@@ -21,6 +22,8 @@ class MyShip(Orbiter):
 		self.center = center
 		self.lastRot = self.rotation
 
+		self.new = False
+
 
 	def updateRotation(self, pressed):
 
@@ -29,6 +32,11 @@ class MyShip(Orbiter):
 
 		elif pygame.K_d in pressed:
 			self.rotation -= RAD * self.rotSpeed
+
+		if pygame.K_q in pressed:
+			self.rotation = (-self.velocity).arg()
+		elif pygame.K_e in pressed:
+			self.rotation = (self.velocity).arg()
 
 		c = self.rect.center
 		self.image = pygame.transform.rotate(self.original, math.degrees(self.rotation))
@@ -46,6 +54,8 @@ class MyShip(Orbiter):
 
 		self.updateRotation(pressed)
 
+		self.new = False
+
 
 		if mouseDown and self.down:
 			self.timer-=1
@@ -55,12 +65,26 @@ class MyShip(Orbiter):
 			self.timer = 120
 
 		elif not mouseDown and self.down:
-			print "missile fired", self.timer
+			# print "missile fired", self.timer
 			self.down = False
+			self.new = True
 
-			self.image = pygame.transform.scale(self.original, (abs(self.timer), abs(self.timer)))
-			self.rect = self.image.get_rect()
+			x, y = mouseLoc
 
+			locVector = Vector(x - self.center[0], y-self.center[1])
+
+			tVect = (locVector - self.position)
+			tVect.x = -tVect.x
+
+			angle = tVect.arg()
+
+
+
+			self.out = Missile(self.position, angle, self.timer, self.velocity, self.gravity, self.center)
+
+
+
+			
 
 
 

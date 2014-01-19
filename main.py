@@ -4,7 +4,7 @@ from Orbiter import *
 from MyShip import *
 from Planet import *
 # from Asteroid import *
-# from Missile import *
+from Missile import *
 import pygame
 import os, sys
 
@@ -16,7 +16,7 @@ G = 50000
 
 
 pygame.init()
-screen = pygame.display.set_mode((700, 700))
+screen = pygame.display.set_mode((1000, 1000))
 pygame.display.set_caption("SpaceGame")
 
 
@@ -33,11 +33,11 @@ player = MyShip(CENTER, ROTSPEED, THRUST, G)
 pl = Planet(350, 350)
 
 playerGroup = pygame.sprite.RenderPlain(player, pl)
+myMissiles = pygame.sprite.RenderPlain()
 # centerGroup = pygame.sprite.RenderPlain((planet))
 # playerGroup.add(pl)
 
 NPC = {}
-missiles =[]
 
 pressed = []
 mouseLoc = (0,0)
@@ -74,11 +74,18 @@ while True:
 
 
 	playerGroup.update(pressed, mouseLoc, mouseDown)
-	# centerGroup.update(pressed)
+	
+	if player.new:
+		m = player.out
+		myMissiles.add(m)
+
+	myMissiles.update()
+
 
 	screen.blit(background, (0, 0))
 	playerGroup.draw(screen)
-	# pl.draw(screen)
+	myMissiles.draw(screen)
+	
 	pygame.display.flip()
 
 
@@ -87,6 +94,6 @@ while True:
 		#send networking stuff
 		pass
 
-		# do networking stuff
+	# do networking stuff
 	gameClock.tick(60)
 	

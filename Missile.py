@@ -3,19 +3,51 @@ from Orbiter import *
 from Vector import *
 
 class Missile(Orbiter):
-	def __init__(self, x, y, rot, fire, img, imgFire):
-		self.name = name
-		self.image = pygame.image.load("images/redShip.png")
-		self.image = pygame.transform.scale(self.image, (20, 20))
-		self.original = self.image
-		self.changeValues(x, y, rot)
-		self.fireImg = pygame.image.load("images/missileFire.png")
+	def __init__(self, pos, rot, burn, Vi, g, center):
+		Orbiter.__init__(self, Vector(pos.x, pos.y), Vector(Vi.x, Vi.y), g)
+		self.thrust = 1
+
+
+		self.adjust = 90		
+
+
+
+		self.center = center
+		self.rotation =  rot
+
+		self.burnTime = burn
+		self.fuse = 30
+		self.image = pygame.image.load("images/missile.png")
+		self.image = pygame.transform.scale(self.image, (20, 40))
+		self.image = pygame.transform.rotate(self.image, math.degrees(self.rotation) + self.adjust)
+		self.rect = self.image.get_rect()
+		# self.original = self.image
+				
+
+	def update(self):
+		# fuse -= 1
 		
 
-	def changeValues(x, y, rot, fire):
-		self.x = x
-		self.y = y
-		self.rot = rot
+		if self.burnTime > 0:
+			self.burnTime -= 1
+			self.physicsUpdate(createPolar(self.thrust, self.rotation))
 
-		self.image = pygame.transform.rotate(self.original, rot)
-		self.rect = self.image.get_rect(center=(x, y))
+
+		else:
+			self.physicsUpdate(createPolar(0, self.rotation))
+
+
+		try:
+			self.rect.center = (self.center[0] + self.position.x, self.center[1] + self.position.y)
+		except TypeError:
+			self.kill()
+
+
+
+
+
+
+		
+
+
+
