@@ -20,7 +20,6 @@ class Orbiter(pygame.sprite.Sprite):
 			(self.LRL + self.gravity*self.position/self.position.abs()).x/self.angularMomentum)
 		self.velocity += dv
 		self.computeLRL()
-		print self.LRL
 		th = self.position.arg() + dt * self.sweptArea / self.position.abs2()
 		self.position.setP(self.getRadius(th),th)
 		
