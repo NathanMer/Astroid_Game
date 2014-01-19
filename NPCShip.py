@@ -18,8 +18,7 @@ class NPCShip(pygame.sprite.Sprite):
 		self.x = x
 		self.y = y
 		self.rot = rot
-
-		self.image = pygame.transform.rotate(self.original, rot)
+		self.image = pygame.transform.rotate(self.original, rot+90)
 		self.rect = self.image.get_rect(center=(x, y))
 
 	# def update():
