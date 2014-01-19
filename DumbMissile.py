@@ -2,8 +2,9 @@ import pygame, math
 from Orbiter import *
 from Vector import *
 
-class DumbMissile(Orbiter):
+class DumbMissile(pygame.sprite.Sprite):
 	def __init__(self, x, y, rot, fire):
+		pygame.sprite.Sprite.__init__(self)
 
 		self.trigger = 30
 

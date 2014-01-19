@@ -2,8 +2,9 @@ import pygame
 from Orbiter import *
 import math
 
-class NPCShip(Orbiter):
+class NPCShip(pygame.sprite.Sprite):
 	def __init__(self, name, x, y, rot, fire, img, imgFire):
+		pygame.sprite.Sprite.__init__(self)
 		self.name = name
 		self.image = pygame.image.load("images/redShip.png")
 		self.image = pygame.transform.scale(self.image, (20, 20))
@@ -21,4 +22,3 @@ class NPCShip(Orbiter):
 		self.rect = self.image.get_rect(center=(x, y))
 
 	# def update():
-		
