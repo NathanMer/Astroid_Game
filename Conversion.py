@@ -5,30 +5,33 @@ def parse(data):
     data = data[:-1]
     data = data.split(",")
     allCommands = []
-    for command in data:
-        commands = {}
-        try:
-            commands["type"] = command[0]
-        except:
-            return []
-        if (command[0] == "S"):
-            commands["x"] = int(command[1:5])
-            commands["y"] = int(command[5:9])
-            commands["burning"] = bool(int(command[9]))
-            commands["rotation"] = int(command[10:13])
-        elif (command[0] == "L"):
-            commands["name"] = command[1:11]
-            commands["x"] = int(command[11:15])
-            commands["y"] = int(command[15:19])
-            commands["burning"] = bool(int(command[19]))
-            commands["rotation"] = int(command[20:23])
-        elif (command[0] == "E"):
-            commands["x"] = int(command[1:5])
-            commands["y"] = int(command[5:9])
-        elif (command[0] == "R"):
-            commands["name"] = command[1:11]
-        allCommands.append(commands)
-    return allCommands
+    try:
+        for command in data:
+            commands = {}
+            try:
+                commands["type"] = command[0]
+            except:
+                return []
+            if (command[0] == "S"):
+                commands["x"] = int(command[1:5])
+                commands["y"] = int(command[5:9])
+                commands["burning"] = bool(int(command[9]))
+                commands["rotation"] = int(command[10:13])
+            elif (command[0] == "L"):
+                commands["name"] = command[1:11]
+                commands["x"] = int(command[11:15])
+                commands["y"] = int(command[15:19])
+                commands["burning"] = bool(int(command[19]))
+                commands["rotation"] = int(command[20:23])
+            elif (command[0] == "E"):
+                commands["x"] = int(command[1:5])
+                commands["y"] = int(command[5:9])
+            elif (command[0] == "R"):
+                commands["name"] = command[1:11]
+            allCommands.append(commands)
+        return allCommands
+    except:
+        return []
 
 def encode(allCommands):
     data = []

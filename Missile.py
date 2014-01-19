@@ -42,10 +42,16 @@ class Missile(Orbiter):
 
 		if self.burnTime > 0:
 			self.burnTime -= 1
-			self.physicsUpdate(createPolar(self.thrust, self.rotation))
+			try:
+				self.physicsUpdate(createPolar(self.thrust, self.rotation))
+			except:
+				self.explode = True
 
 		else:
-			self.physicsUpdate(createPolar(0, self.rotation))
+			try:
+				self.physicsUpdate(createPolar(0, self.rotation))
+			except:
+				self.explode = True
 
 
 		try:
