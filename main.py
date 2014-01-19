@@ -204,7 +204,7 @@ while True:
 
 	# checking for missile explodes
 
-	hits = hitBy(player.p, myMissiles, TRIGGER)		###deals with this player's missiles
+	hits = hitBy(player.p, myMissiles, TRIGGER)		###deals with this player's missiles hitting player
 
 	if hits:
 		for p in hits:
