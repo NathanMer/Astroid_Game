@@ -43,7 +43,7 @@ if rep =="y":
 
 	t.start()
 	serve.recieve()
-	t.join()
+	t.join(timeout=3)
 	flag = parent.recv()
 else:
 	flag = client.pickName(ip,9000,name)
@@ -56,7 +56,7 @@ while not flag:
 
 		t.start()
 		serve.recieve()
-		t.join()
+		t.join(timeout=3)
 		flag = parent.recv()
 	else:
 		flag = client.pickName(ip,9000,name)
