@@ -142,8 +142,9 @@ while True:
 	for event in data:
 		if event["type"] == "L":
 			name = event["name"]
-			if name in NPC.keys():
-				NPC[name].changeValues(event['x'], event['y'], event['rotation'], event['burning'])
+
+			NPC[name].changeValues(event['x'], event['y'], event['rotation'], event['burning'])
+
 
 
 		if event["type"] == "R":
