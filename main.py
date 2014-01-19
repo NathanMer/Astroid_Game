@@ -282,9 +282,9 @@ while True:
 
 
 	frame += 1
-	if not (frame%3):
-		x, y = player.rect.center
-		client.sendLocation(int(x),int(y), True, int(math.degrees(player.rotation)))
+	x, y = player.rect.center
+	client.sendLocation(int(x),int(y), True, int(math.degrees(player.rotation)))
+	
 
 	
 	# if rep == "y":
