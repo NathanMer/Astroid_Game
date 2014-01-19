@@ -5,8 +5,11 @@ from MyShip import *
 from Planet import *
 from Explosion import *
 from plus import *
-# from Asteroid import *
 from Missile import *
+from DumbMissile import *
+from Connection import *
+from Server import *
+
 import pygame
 import os, sys
 
@@ -16,6 +19,26 @@ CENTER = (500, 500)
 G = 50000
 TRIGGER = 30
 
+
+###############
+#networking constants
+
+
+rep = raw_input("server? [Y, N]")
+if rep =="y":
+	serve = Server(9000)
+client = Connection()
+name = raw_input("Name? [10 Character]")
+ip = raw_input("What Ip?")
+while not client.pickName(ip, 9000, name):
+	name = raw_input("Other Name? [10 Character]")
+
+
+
+
+
+
+###############
 # startV
 
 
@@ -58,6 +81,9 @@ pl = Planet(CENTER[0], CENTER[1])
 playerGroup = pygame.sprite.RenderPlain(player, pl)
 myMissiles = pygame.sprite.RenderPlain()
 explosions = pygame.sprite.RenderPlain()
+otherMissiles = pygame.sprite.RenderPlain()
+npcs = pygame.sprite.RenderPlain()
+
 newExplo = []
 # centerGroup = pygame.sprite.RenderPlain((planet))
 # playerGroup.add(pl)
@@ -74,11 +100,45 @@ frame = 0
 
 while True:
 
+	otherMissiles.empty()
+
+	data = client.recieve()
+
+	for event in data:
+		if event["type"] == "L":
+			name = event["name"]
+			if name in NPC.keys():
+				NPC[name].changeValues(event['x'], event['y'], event['rotation'], event['burning'])
+
+
+		if event["type"] == "R":
+			if event["name"] in NPC.keys():
+				NPC.pop(event["name"])
+
+
+		if event["type"] == "S":
+			otherMissiles.add(DumbMissile(event['x'], event['y'], event['rotation'], event['burning']))
+			#create a dumb missile, check  for collisions later
+
+		if event["type"] == "E":
+			explosions.add(Explosion((event['x'], event['y']),client , createNew=False))
+
+	npcs.empty()
+	for k in NPC.keys():
+		npcs.add(NPC[k])
+
+
+
 	#get keyboard events
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 		
 			pygame.quit()
+
+			if rep =="y":
+				serve.close()
+
+			client.close()
 			sys.exit()
 
 		elif event.type == pygame.KEYDOWN:
@@ -97,25 +157,31 @@ while True:
 	mouseLoc = pygame.mouse.get_pos()
 
 
-
 	playerGroup.update(pressed, mouseLoc, mouseDown)
 
 	# checking for missile explodes
 
-	hits = hitBy(player.p, myMissiles, TRIGGER)
+	hits = hitBy(player.p, myMissiles, TRIGGER)		###deals with this player's missiles
 
 	if hits:
 		for p in hits:
-			explosions.add(Explosion(p))
-
-	exploded = False
+			explosions.add(Explosion(p, client))
+			client.sendRemove()
 
 	
+	hits = hitBy(player.p, otherMissiles, TRIGGER)	###deals with missiles of other players
+	if hits:
+		for p in hits:
+			explosions.add(Explosion(p, client))
+			client.sendRemove()
+				
+
+	exploded = False
 	for expl in explosions.sprites():
 		hits = hitBy(expl.p, myMissiles, TRIGGER)
 		if expl.inside(player.p) and not exploded:
 			exploded = True
-			explosions.add(Explosion(player.p))
+			explosions.add(Explosion(player.p, client))
 			player.rect.center = (-20, -20)
 			try:
 				playerGroup.remove(player)
@@ -124,12 +190,11 @@ while True:
 
 		if hits:
 			for p in hits:
-				explosions.add(Explosion(p))
+				explosions.add(Explosion(p, client))
 
 	if exploded:
 		player.explode = True
-
-
+		client.sendRemove()
 
 	
 	if player.new:
@@ -138,7 +203,8 @@ while True:
 
 	if player.explode:
 		player.explode = False
-		explosions.add(Explosion(player.p))
+		client.sendRemove()
+		explosions.add(Explosion(player.p, client))
 
 	for sp in myMissiles:
 
@@ -147,12 +213,12 @@ while True:
 
 	for sp in newExplo:
 		myMissiles.remove(sp)
-		e = Explosion(sp.p)
+		e = Explosion(sp.p, client)
 		explosions.add(e)
 
 	newExplo = []
 
-	myMissiles.update()
+	myMissiles.update(client)
 	explosions.update()
 
 
@@ -160,6 +226,8 @@ while True:
 	explosions.draw(screen)
 	playerGroup.draw(screen)
 	myMissiles.draw(screen)
+	npcs.draw(screen)
+	otherMissiles.draw(screen)
 
 	
 	#drawing usefull stuff
@@ -172,9 +240,11 @@ while True:
 
 	frame += 1
 	if not (frame%3):
-		#send networking stuff
-		pass
+		x, y = player.rect.center
+		client.sendLocation(x,y, True, player.rotation)
 
-	# do networking stuff
+	
+
+	serve.recieve()
 	gameClock.tick(60)
 	

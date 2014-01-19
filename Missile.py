@@ -13,8 +13,6 @@ class Missile(Orbiter):
 
 		self.adjust = 90		
 
-
-
 		self.center = center
 		self.rotation =  rot
 
@@ -33,22 +31,18 @@ class Missile(Orbiter):
 		return (Vector(pos[0], pos[1]) - Vector(self.p[0], self.p[1])).abs() < self.trigger and self.fuse<1
 				
 
-	def update(self):
+	def update(self, client):
 
 		if self.fuse <1:
 			self.explode = (self.getAltitude() <= self.surface)
 			self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
 
-
-
 		else:
 			self.fuse -= 1
-
 
 		if self.burnTime > 0:
 			self.burnTime -= 1
 			self.physicsUpdate(createPolar(self.thrust, self.rotation))
-
 
 		else:
 			self.physicsUpdate(createPolar(0, self.rotation))
@@ -60,6 +54,7 @@ class Missile(Orbiter):
 			self.kill()
 
 		self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
+		client.sendMissile(self.p[0], self.p[1], (self.fuse<1), self.rotation)
 
 
 

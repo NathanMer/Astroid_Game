@@ -3,19 +3,25 @@ from Orbiter import *
 from Vector import *
 
 class DumbMissile(Orbiter):
-	def __init__(self, x, y, rot, fire, img, imgFire):
-		self.name = name
-		self.image = pygame.image.load("images/redShip.png")
-		self.image = pygame.transform.scale(self.image, (20, 20))
-		self.original = self.image
-		self.changeValues(x, y, rot)
-		self.fireImg = pygame.image.load("images/missileFire.png")
-		
+	def __init__(self, x, y, rot, fire):
 
-	def changeValues(x, y, rot, fire):
-		self.x = x
-		self.y = y
-		self.rot = rot
+		self.trigger = 30
 
-		self.image = pygame.transform.rotate(self.original, rot)
-		self.rect = self.image.get_rect(center=(x, y))
+		self.explode = False
+
+		self.adjust = 90		
+
+		self.rotation =  rot
+
+		self.armed = fire
+
+		self.p = (x, y)
+
+		self.image = pygame.image.load("images/missile.png")
+		self.image = pygame.transform.scale(self.image, (20, 40))
+		self.image = pygame.transform.rotate(self.image, math.degrees(self.rotation) + self.adjust)
+		self.rect = self.image.get_rect()
+
+	def inside(self, pos):
+		return (Vector(pos[0], pos[1]) - Vector(self.p[0], self.p[1])).abs() < self.trigger and armed
+
