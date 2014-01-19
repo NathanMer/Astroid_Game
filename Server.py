@@ -50,7 +50,7 @@ class Server():
     def getData(self, user):
         """Recieves data from current users"""
         try:
-            data = self.users[user].recv(2048)
+            data = self.users[user].recv(8192)
         except socket.error:
             data = ""
         return data

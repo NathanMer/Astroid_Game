@@ -22,7 +22,7 @@ class Connection():
     ##################################### RECIEVE ##########################
     def recieve(self):
         try:
-            data = self.c.recv(2048)
+            data = self.c.recv(8192)
             data = parse(data)
             return data
         except socket.error:
