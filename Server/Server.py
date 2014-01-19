@@ -1,5 +1,6 @@
 """Server class"""
 import socket
+from Conversion import *
 
 class Server():
     """Runs the Server"""
@@ -16,11 +17,14 @@ class Server():
     def recieve(self):
         """Recieves connections from new users and data from others"""
         self.getNewConnections()
+        allData = []
         for user in self.users:
             data = self.getData(user)
             if (data != ""):
                 self.send(data)
-            self.parse(data)
+            data = parse(data)
+            allData.append(data[0])
+        return allData
 
     def getNewConnections(self):
         """Checks for new users and connects with them"""
@@ -44,10 +48,9 @@ class Server():
     def getData(self, user):
         """Recieves data from current users"""
         try:
-            data = self.users[user].recv() ####FIX#####
+            data = self.users[user].recv(2048)
         except socket.error:
             data = ""
-            pass
         return data
 
     ########################### SEND #######################################
@@ -59,47 +62,24 @@ class Server():
         except socket.error:
             pass
 
-    def sendMissile(self):
-        pass
-    
-    def sendLocation(self):
-        pass
+    def sendMissile(self, x, y, b, r):
+        t = encode([{"type":"S", "x":x, "y":y, "burning":b, "rotation":r}])
+        self.send(t)
 
-    def sendExplode(self):
-        pass
+    def sendLocation(self, n, x, y, b, r):
+        t=encode([{"type":"L","name":n,"x":x,"y":y,"burning":b,"rotation":r}])
+        self.send(t)
 
-    def sendRemove(self):
-        pass
+    def sendExplode(self, x, y):
+        t = encode([{"type":"E", "x":x, "y":y}])
+        self.send(t)
+
+    def sendRemove(self, n):
+        t = encode([{"type":"R", "name":n}])
+        self.send(t)
 
     def close(self):
         """Closes all connection"""
         for user in self.users:
             self.users[user].close()
         self.s.close()
-
-    ######################### PARSE ########################################
-    def parse(self, data):
-        """Parses incoming data and puts it in a readable format"""
-        data = data.split(",")
-        allCommands = []
-        for command in data:
-            commands = {}
-            commands["type"] = command[0]
-            if (command[0] == "S"):
-                commands["x"] = command[1:5]
-                commands["y"] = command[5:9]
-                commands["burning"] = command[9]
-                commands["rotation"] = command[10:13]
-            elif (command[0] == "L"):
-                commands["name"] = command[1:11]
-                commands["x"] = command[11:15]
-                commands["y"] = command[15:19]
-                commands["burning"] = command[19]
-                commands["rotation"] = command[20:23]
-            elif (command[0] == "E"):
-                commands["x"] = command[1:5]
-                commands["y"] = command[5:9]
-            else:
-                commands["name"] = command[1:11]
-            allCommands.append(commands)
-        return allCommands
