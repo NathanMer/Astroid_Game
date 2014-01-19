@@ -7,9 +7,10 @@ class Server():
     def __init__(self, PORT):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.setblocking(False)
-        self.s.bind((self.getip(), PORT))
+        ip = self.getip()
+        self.s.bind((ip, PORT))
         self.s.listen(1)
-        print "Listening"
+        print "Listening on port " + ip
 
         self.users = {}
 
