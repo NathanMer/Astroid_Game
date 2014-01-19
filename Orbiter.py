@@ -8,10 +8,10 @@ class Orbiter(pygame.sprite.Sprite):
 		self.velocity = velocity
 		self.gravity = gravity #Strength of the gravitation attraction
 		self.angularMomentum = position.cross(velocity)
-		self.LRL = velocity.cross(self.angularMomentum) - gravity * position / position.abs()
+		self.LRL = velocity.coCross(self.angularMomentum) - gravity * position / position.abs()
 		self.rotation = velocity.arg()
-	def physicsUpdate(dv = 0, dt = .1):
+	def physicsUpdate(self,dv = 0, dt = .1):
 		pass
-	def getRadius(th):
-		return self.angularMomentum.abs2()/(self.gravity()+self.LRL.abs()*cos(th))
+	def getRadius(self,th):
+		return (self.angularMomentum**2)/(self.gravity+self.LRL.abs()*cos(th))
 		
