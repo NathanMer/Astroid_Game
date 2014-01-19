@@ -3,6 +3,7 @@ from Vector import *
 from Orbiter import *
 from MyShip import *
 from Planet import *
+from Explosion import *
 from plus import *
 # from Asteroid import *
 from Missile import *
@@ -30,11 +31,12 @@ background.fill((0, 0, 0))
 gameClock = pygame.time.Clock()
 
 
-player = MyShip(CENTER, ROTSPEED, THRUST, G)
+player = MyShip(CENTER, ROTSPEED, THRUST, G, 20)
 pl = Planet(350, 350)
 
 playerGroup = pygame.sprite.RenderPlain(player, pl)
 myMissiles = pygame.sprite.RenderPlain()
+explosions = pygame.sprite.RenderPlain()
 # centerGroup = pygame.sprite.RenderPlain((planet))
 # playerGroup.add(pl)
 
@@ -80,13 +82,21 @@ while True:
 		m = player.out
 		myMissiles.add(m)
 
+	if player.explode:
+		player.explode = False
+		explosions.add(Explosion(player.p))
+
 	myMissiles.update()
+	explosions.update()
 
 
 	screen.blit(background, (0, 0))
+	explosions.draw(screen)
 	playerGroup.draw(screen)
 	myMissiles.draw(screen)
+
 	
+	#drawing usefull stuff
 	drawPlus(screen, CENTER[0]+player.getApoapsis().x, CENTER[1]+player.getApoapsis().y, (255,255,0))
         drawPlus(screen, CENTER[0]+player.getPeriapsis().x, CENTER[1]+player.getPeriapsis().y, (0,255,255))
 

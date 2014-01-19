@@ -7,12 +7,13 @@ from Missile import *
 RAD = 0.017453292519943295
 
 class MyShip(Orbiter):
-	def __init__(self, center, rotSpeed, thrust, g):
+	def __init__(self, center, rotSpeed, thrust, g, surface):
 		Orbiter.__init__(self, Vector(100, 0), Vector(0, -20), g)
 
 		self.timer = None
 		self.down = False
 		self.rotSpeed = rotSpeed
+		self.surface = surface
 		self.image = pygame.image.load("images/blueShip.png")
 		self.image = pygame.transform.scale(self.image, (20, 45))
 		self.image = pygame.transform.rotate(self.image, 90)
@@ -61,13 +62,19 @@ class MyShip(Orbiter):
 
 		self.new = False
 
+		self.explode = (self.getAltitude() <= self.surface)
+		self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
+
+		if self.explode:
+			self.kill()
+
 
 		if mouseDown and self.down:
 			self.timer-=1
 
 		elif mouseDown and not self.down:
 			self.down = True
-			self.timer = 120
+			self.timer = 60
 
 		elif not mouseDown and self.down:
 			# print "missile fired", self.timer
