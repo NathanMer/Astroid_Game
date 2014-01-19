@@ -9,6 +9,8 @@ from Missile import *
 from DumbMissile import *
 from Connection import *
 from Server import *
+from multiprocessing import Process, Pipe
+
 
 import pygame
 import os, sys
@@ -23,6 +25,10 @@ TRIGGER = 30
 ###############
 #networking constants
 
+def namePick(ip,port,name, client, conn):
+	conn.send(client.pickName(ip,port,name))
+	conn.close()
+
 
 rep = raw_input("server? [Y, N]")
 if rep =="y":
@@ -30,12 +36,30 @@ if rep =="y":
 client = Connection()
 name = raw_input("Name? [10 Character]")
 ip = raw_input("What Ip?")
-while not client.pickName(ip, 9000, name):
-	name = raw_input("Other Name? [10 Character]")
-	if rep == "y":
-		serve.recieve()
-if rep == "y":
+
+if rep =="y": 
+	parent, child = Pipe()
+	t = Process(target=namePick, name="SecondThread", args=(ip, 9000, name, client, child))
+
+	t.start()
 	serve.recieve()
+	t.join()
+	flag = parent.recv()
+else:
+	flag = client.pickName(ip,9000,name)
+
+while not flag:
+	name = raw_input("Other Name? [10 Character]")
+	if rep = "y":
+		parent, child = Pipe()
+		t = Process(target=namePick, name="SecondThread", args=(ip, port, name, client, child))
+
+		t.start()
+		serve.recieve()
+		t.join()
+		flag = parent.recv()
+	else:
+		flag = client.pickName(ip,9000,name)
 
 
 
