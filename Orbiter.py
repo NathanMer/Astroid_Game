@@ -34,3 +34,6 @@ class Orbiter(pygame.sprite.Sprite):
 	def getPeriapsis(self):
 		th = self.LRL.arg()
 		return createPolar(self.getRadius(th), th)
+
+	def getAltitude(self):
+		retirn self.position.abs()
