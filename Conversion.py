@@ -7,7 +7,10 @@ def parse(data):
     allCommands = []
     for command in data:
         commands = {}
-        commands["type"] = command[0]
+        try:
+            commands["type"] = command[0]
+        except:
+            return []
         if (command[0] == "S"):
             commands["x"] = int(command[1:5])
             commands["y"] = int(command[5:9])
