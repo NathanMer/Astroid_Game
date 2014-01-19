@@ -54,7 +54,8 @@ class Missile(Orbiter):
 			self.kill()
 
 		self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
-		client.sendMissile(int(self.p[0]), int(self.p[1]), (self.fuse<1), int(math.degrees(self.rotation)))
+		if int(self.p[0]) >0 and int(self.p[1]) >0:
+			client.sendMissile(int(self.p[0]), int(self.p[1]), (self.fuse<1), int(math.degrees(self.rotation)))
 
 
 
