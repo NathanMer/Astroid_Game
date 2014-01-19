@@ -9,6 +9,7 @@ class Server():
         self.s.setblocking(False)
         ip = self.getip()
         self.s.bind((ip, PORT))
+        # print self.s.getsockname()
         self.s.listen(1)
         print "Listening on ip " + ip
 
@@ -23,7 +24,7 @@ class Server():
             data = self.getData(user)
             if (data != ""):
                 self.send(data, user)
-                print data
+                # print data
                 data = parse(data)
                 for d in data:
                     if d["type"] == "R":

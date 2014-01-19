@@ -9,7 +9,7 @@ class NPCShip(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 		self.name = name
 		self.image = IMGS
-		self.image = pygame.transform.scale(self.image, (20, 20))
+		self.image = pygame.transform.scale(self.image, (20, 45))
 		self.original = self.image
 		self.changeValues(x, y, rot, fire)
 		

@@ -24,7 +24,7 @@ class Missile(Orbiter):
 		self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
 		self.fuse = 40
 		self.image = MISS
-		self.image = pygame.transform.scale(self.image, (20, 40))
+		self.image = pygame.transform.scale(self.image, (5, 10))
 		self.image = pygame.transform.rotate(self.image, math.degrees(self.rotation) + self.adjust)
 		self.rect = self.image.get_rect()
 		# self.original = self.image
