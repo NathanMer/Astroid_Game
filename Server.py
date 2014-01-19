@@ -23,6 +23,7 @@ class Server():
             data = self.getData(user)
             if (data != ""):
                 self.send(data, user)
+                print data
                 data = parse(data)
                 for d in data:
                     if d["type"] == "R":
