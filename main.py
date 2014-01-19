@@ -166,9 +166,9 @@ while True:
 		if event["type"] == "E":
 			explosions.add(Explosion((event['x'], event['y']),client , createNew=False))
 
-	npcs.empty()
-	for k in NPC.keys():
-		npcs.add(NPC[k])
+	# npcs.empty()
+	# for k in NPC.keys():
+	# 	npcs.add(NPC[k])
 
 
 
