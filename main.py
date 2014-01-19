@@ -50,7 +50,7 @@ else:
 
 while not flag:
 	name = raw_input("Other Name? [10 Character]")
-	if rep = "y":
+	if rep == "y":
 		parent, child = Pipe()
 		t = Process(target=namePick, name="SecondThread", args=(ip, port, name, client, child))
 
