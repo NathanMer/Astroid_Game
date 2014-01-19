@@ -10,7 +10,7 @@ class Server():
         ip = self.getip()
         self.s.bind((ip, PORT))
         self.s.listen(1)
-        print "Listening on port " + ip
+        print "Listening on ip " + ip
 
         self.users = {}
 
