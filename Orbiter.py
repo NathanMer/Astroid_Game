@@ -36,4 +36,4 @@ class Orbiter(pygame.sprite.Sprite):
 		return createPolar(self.getRadius(th), th)
 
 	def getAltitude(self):
-		retirn self.position.abs()
+		return self.position.abs()
