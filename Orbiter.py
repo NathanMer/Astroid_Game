@@ -16,8 +16,11 @@ class Orbiter(pygame.sprite.Sprite):
 		self.sweptArea = self.position.abs2() * self.angularMomentum / self.position.abs()
 
 	def physicsUpdate(self,dv = 0, dt = .001):
+		self.velocity = Vector(-(self.LRL + self.gravity*self.position/self.position.abs()).y/self.angularMomentum,
+			(self.LRL + self.gravity*self.position/self.position.abs()).x/self.angularMomentum)
 		self.velocity += dv
-		#self.computeLRL()
+		self.computeLRL()
+		print self.LRL
 		th = self.position.arg() + dt * self.sweptArea / self.position.abs2()
 		self.position.setP(self.getRadius(th),th)
 		
