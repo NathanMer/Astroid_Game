@@ -144,7 +144,7 @@ while True:
 		if event["type"] == "L":
 			name = event["name"]
 			if name in NPC.keys():
-				NPC[name].changeValues(event['x'], event['y'], event['rotation'], event['burning'])
+				NPC[name] = NPC[name].changeValues(event['x'], event['y'], event['rotation'], event['burning'])
 
 			else:
 				NPC[name] = NPCShip(name, event['x'], event['y'], event['rotation'], event['burning'])
