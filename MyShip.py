@@ -7,7 +7,7 @@ RAD = 0.017453292519943295
 
 class MyShip(Orbiter):
 	def __init__(self, center, rotSpeed, thrust, g):
-		Orbiter.__init__(self, Vector(100, 0), Vector(0, 50), g)
+		Orbiter.__init__(self, Vector(100, 0), Vector(0, 20), g)
 		self.timer = None
 		self.down = False
 		self.image = pygame.image.load("images/missileExplosion.png")#blueShip.png")

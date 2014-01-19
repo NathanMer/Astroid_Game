@@ -26,3 +26,10 @@ class Orbiter(pygame.sprite.Sprite):
 	def getRadius(self,th):
 		return (self.angularMomentum**2)/(self.gravity+self.LRL.abs()*cos(th-self.LRL.arg()))
 		
+	def getApoapsis(self):
+		th = (-LRL).arg()
+		return createPolar(getRadius(th), th)
+
+	def getPeriapsis(self):
+		th = LRL.arg()
+		return createPolar(getRadius(th), th)

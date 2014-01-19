@@ -49,6 +49,10 @@ class Vector:
 	def __repr__(self):
 		return "<" + str(self.x) + "," + str(self.y) + ">"
 
+	
+	def __neg__(self):
+		return Vector(-self.x, -self.y)
+
 def createPolar(r,th):
 	v = Vector(0,0)
 	v.setP(r,th)
