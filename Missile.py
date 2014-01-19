@@ -2,6 +2,8 @@ import pygame, math
 from Orbiter import *
 from Vector import *
 
+MISS = pygame.image.load("images/missile.png")
+
 class Missile(Orbiter):
 	def __init__(self, pos, rot, burn, Vi, g, center, surface):
 		Orbiter.__init__(self, Vector(pos.x, pos.y), Vector(Vi.x, Vi.y), g)
@@ -21,7 +23,7 @@ class Missile(Orbiter):
 		self.burnTime = burn
 		self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
 		self.fuse = 40
-		self.image = pygame.image.load("images/missile.png")
+		self.image = MISS
 		self.image = pygame.transform.scale(self.image, (20, 40))
 		self.image = pygame.transform.rotate(self.image, math.degrees(self.rotation) + self.adjust)
 		self.rect = self.image.get_rect()

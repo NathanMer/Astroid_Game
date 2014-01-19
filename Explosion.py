@@ -1,10 +1,12 @@
 import pygame, math
 from Vector import *
 
+IMGX = pygame.image.load("images/missileExplosion.png")
+
 class Explosion(pygame.sprite.Sprite):
 	def __init__(self, p, client, createNew=True):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load("images/missileExplosion.png")
+		self.image = IMGX
 		self.image = pygame.transform.scale(self.image, (60, 60))
 		self.rect = self.image.get_rect(center=p)
 		self.x, self.y = p
