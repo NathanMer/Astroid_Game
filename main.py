@@ -39,6 +39,8 @@ def namePick(ip,port,name, client, childPipe):
 # 	serve = Server(9000)
 client = Connection()
 name = raw_input("Name? [10 Character]")
+while len(name) < 10:
+	name = name + " "
 ip = raw_input("What Ip?")
 
 # if rep =="y": 
@@ -55,6 +57,9 @@ flag = client.pickName(ip,9000,name)
 
 while not flag:
 	name = raw_input("Other Name? [10 Character]")
+
+	while len(name) < 10:
+		name = name + " "
 	# if rep == "y":
 	# 	parent, child = Pipe()
 	# 	t = Process(target=namePick, name="SecondThread", args=(ip, port, name, client, child))
@@ -154,9 +159,9 @@ while True:
 
 
 
-		if event["type"] == "R":
-			if event["name"] in NPC.keys():
-				NPC.pop(event["name"])
+		# if event["type"] == "R":
+		# 	if event["name"] in NPC.keys():
+		# 		NPC.pop(event["name"])
 
 
 		if event["type"] == "S":
