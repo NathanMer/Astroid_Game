@@ -100,11 +100,15 @@ while True:
 
 	playerGroup.update(pressed, mouseLoc, mouseDown)
 
+	# checking for missile explodes
+
 	hits = hitBy(player.p, myMissiles, TRIGGER)
 
 	if hits:
 		for p in hits:
 			explosions.add(Explosion(p))
+
+	
 
 	
 	if player.new:
