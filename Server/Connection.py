@@ -13,6 +13,7 @@ class Connection():
         self.c.sendall(name)
         if (self.c.recv(1) == "Y"):
             self.c.setblocking(False)
+            self.name = name
             return True
         else:
             self.c.close()
@@ -39,7 +40,8 @@ class Connection():
         t = encode([{"type":"S", "x":x, "y":y, "burning":b, "rotation":r}])
         self.send(t)
 
-    def sendLocation(self, n, x, y, b, r):
+    def sendLocation(self, x, y, b, r):
+        n = self.name
         t=encode([{"type":"L","name":n,"x":x,"y":y,"burning":b,"rotation":r}])
         self.send(t)
 
@@ -47,8 +49,8 @@ class Connection():
         t = encode([{"type":"E", "x":x, "y":y}])
         self.send(t)
 
-    def sendRemove(self, n):
-        t = encode([{"type":"R", "name":n}])
+    def sendRemove(self):
+        t = encode([{"type":"R", "name":self.name}])
         self.send(t)
 
     ################################### EXIT ###############################

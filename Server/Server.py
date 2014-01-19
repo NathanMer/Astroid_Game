@@ -18,14 +18,10 @@ class Server():
     def recieve(self):
         """Recieves connections from new users and data from others"""
         self.getNewConnections()
-        allData = []
         for user in self.users:
             data = self.getData(user)
             if (data != ""):
                 self.send(data, user)
-                data = parse(data)
-                allData.append(data[0])
-        return allData
 
     def getNewConnections(self):
         """Checks for new users and connects with them"""
@@ -64,22 +60,6 @@ class Server():
                 self.users[user].sendall(data)
         except socket.error:
             pass
-
-    def sendMissile(self, x, y, b, r):
-        t = encode([{"type":"S", "x":x, "y":y, "burning":b, "rotation":r}])
-        self.send(t)
-
-    def sendLocation(self, n, x, y, b, r):
-        t=encode([{"type":"L","name":n,"x":x,"y":y,"burning":b,"rotation":r}])
-        self.send(t)
-
-    def sendExplode(self, x, y):
-        t = encode([{"type":"E", "x":x, "y":y}])
-        self.send(t)
-
-    def sendRemove(self, n):
-        t = encode([{"type":"R", "name":n}])
-        self.send(t)
 
     def close(self):
         """Closes all connection"""
