@@ -92,7 +92,7 @@ class MyShip(Orbiter):
 
 
 
-			self.out = Missile(self.position, angle, self.timer, self.velocity, self.gravity, self.center)
+			self.out = Missile(self.position, angle, self.timer, self.velocity, self.gravity, self.center, self.surface)
 
 
 

@@ -12,9 +12,30 @@ import os, sys
 
 ROTSPEED = 3.0
 THRUST = 0.1
-CENTER = (350, 350)
+CENTER = (500, 500)
 G = 50000
+TRIGGER = 30
+
 # startV
+
+
+def hitBy(p, missiles, triggerRange):
+	inRange = []
+	out = []
+	for sp in missiles.sprites():
+		if sp.inside(p):
+			inRange.append(sp)
+
+	if not len(inRange):
+		return False
+
+	for sp in inRange:
+		missiles.remove(sp)
+		out.append(sp.rect.center)
+	return out
+
+
+
 
 
 pygame.init()
@@ -32,11 +53,12 @@ gameClock = pygame.time.Clock()
 
 
 player = MyShip(CENTER, ROTSPEED, THRUST, G, 20)
-pl = Planet(350, 350)
+pl = Planet(CENTER[0], CENTER[1])
 
 playerGroup = pygame.sprite.RenderPlain(player, pl)
 myMissiles = pygame.sprite.RenderPlain()
 explosions = pygame.sprite.RenderPlain()
+newExplo = []
 # centerGroup = pygame.sprite.RenderPlain((planet))
 # playerGroup.add(pl)
 
@@ -77,6 +99,38 @@ while True:
 
 
 	playerGroup.update(pressed, mouseLoc, mouseDown)
+
+	# checking for missile explodes
+
+	hits = hitBy(player.p, myMissiles, TRIGGER)
+
+	if hits:
+		for p in hits:
+			explosions.add(Explosion(p))
+
+	exploded = False
+
+	
+	for expl in explosions.sprites():
+		hits = hitBy(expl.p, myMissiles, TRIGGER)
+		if expl.inside(player.p) and not exploded:
+			exploded = True
+			explosions.add(Explosion(player.p))
+			player.rect.center = (-20, -20)
+			try:
+				playerGroup.remove(player)
+			except:
+				pass
+
+		if hits:
+			for p in hits:
+				explosions.add(Explosion(p))
+
+	if exploded:
+		player.explode = True
+
+
+
 	
 	if player.new:
 		m = player.out
@@ -85,6 +139,18 @@ while True:
 	if player.explode:
 		player.explode = False
 		explosions.add(Explosion(player.p))
+
+	for sp in myMissiles:
+
+		if sp.explode:
+			newExplo.append(sp)
+
+	for sp in newExplo:
+		myMissiles.remove(sp)
+		e = Explosion(sp.p)
+		explosions.add(e)
+
+	newExplo = []
 
 	myMissiles.update()
 	explosions.update()
