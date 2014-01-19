@@ -33,10 +33,15 @@ class MyShip(Orbiter):
 		elif pygame.K_d in pressed:
 			self.rotation -= RAD * self.rotSpeed
 
-		if pygame.K_q in pressed:
-			self.rotation = (-self.velocity).arg()
-		elif pygame.K_e in pressed:
-			self.rotation = (self.velocity).arg()
+		if pygame.K_q in pressed or pygame.K_e in pressed:
+
+			tVect = self.velocity
+			tVect.x = -tVect.x
+
+			if pygame.K_q in pressed:
+				self.rotation = (-tVect).arg()
+			elif pygame.K_e in pressed:
+				self.rotation = (tVect).arg()
 
 		c = self.rect.center
 		self.image = pygame.transform.rotate(self.original, math.degrees(self.rotation))
