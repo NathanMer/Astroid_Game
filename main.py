@@ -121,7 +121,7 @@ newExplo = []
 # centerGroup = pygame.sprite.RenderPlain((planet))
 # playerGroup.add(pl)
 
-NPC = {}
+# NPC = {}
 
 pressed = []
 mouseLoc = (0,0)
@@ -134,6 +134,7 @@ frame = 0
 while True:
 
 	otherMissiles.empty()
+	npcs.empty()
 
 	data = client.recieve()
 
@@ -142,12 +143,14 @@ while True:
 
 	for event in data:
 		if event["type"] == "L":
-			name = event["name"]
-			if name in NPC.keys():
-				NPC[name] = NPC[name].changeValues(event['x'], event['y'], event['rotation'], event['burning'])
+			npcs.add(NPCShip(event['name'], event['x'], event['y'], event['rotation'], event['burning']))
+			# name = event["name"]
+			# print NPC
+			# if name in NPC.keys():
+			# 	NPC[name] = NPC[name].changeValues(event['x'], event['y'], event['rotation'], event['burning'])
 
-			else:
-				NPC[name] = NPCShip(name, event['x'], event['y'], event['rotation'], event['burning'])
+			# else:
+			# 	NPC[name] = NPCShip(name, event['x'], event['y'], event['rotation'], event['burning'])
 
 
 
