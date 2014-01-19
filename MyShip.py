@@ -23,6 +23,8 @@ class MyShip(Orbiter):
 		self.center = center
 		self.lastRot = self.rotation
 
+		self.reload = 0
+
 		self.new = False
 
 
@@ -65,6 +67,9 @@ class MyShip(Orbiter):
 		self.explode = (self.getAltitude() <= self.surface)
 		self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
 
+		if self.reload:
+			self.reload -=1
+
 		if self.explode:
 			self.kill()
 
@@ -76,10 +81,11 @@ class MyShip(Orbiter):
 			self.down = True
 			self.timer = 60
 
-		elif not mouseDown and self.down:
+		elif not mouseDown and self.down and not self.reload:
 			# print "missile fired", self.timer
 			self.down = False
 			self.new = True
+			self.reload = 30
 
 			x, y = mouseLoc
 

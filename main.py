@@ -294,7 +294,7 @@ while True:
 	pygame.display.flip()
 
 
-	frame += 1
+	
 	x, y = player.rect.center
 	client.sendLocation(int(x),int(y), True, int(math.degrees(player.rotation))%360)
 
