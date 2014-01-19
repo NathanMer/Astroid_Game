@@ -113,7 +113,7 @@ background.fill((0, 0, 0))
 gameClock = pygame.time.Clock()
 
 
-player = MyShip(CENTER, ROTSPEED, THRUST, G, 20)
+player = MyShip(CENTER, ROTSPEED, THRUST, G, 40)
 pl = Planet(CENTER[0], CENTER[1])
 
 playerGroup = pygame.sprite.RenderPlain(player, pl)

@@ -1,4 +1,4 @@
-import pygame, math
+import pygame, math, random
 from Vector import *
 from Orbiter import *
 from Missile import *
@@ -8,7 +8,7 @@ RAD = 0.017453292519943295
 
 class MyShip(Orbiter):
 	def __init__(self, center, rotSpeed, thrust, g, surface):
-		Orbiter.__init__(self, Vector(100, 0), Vector(0, -20), g)
+		Orbiter.__init__(self, Vector(random.randint(100, 300), 0), Vector(0, -20), g)
 
 		self.timer = None
 		self.down = False

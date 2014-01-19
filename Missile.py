@@ -7,7 +7,7 @@ MISS = pygame.image.load("images/missile.png")
 class Missile(Orbiter):
 	def __init__(self, pos, rot, burn, Vi, g, center, surface):
 		Orbiter.__init__(self, Vector(pos.x, pos.y), Vector(Vi.x, Vi.y), g)
-		self.thrust = 1
+		self.thrust = 0.5
 		self.explode = False
 
 		self.surface = surface
@@ -18,7 +18,7 @@ class Missile(Orbiter):
 		self.center = center
 		self.rotation =  rot
 
-		self.trigger = 30
+		self.trigger = 20
 
 		self.burnTime = burn
 		self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
