@@ -108,7 +108,28 @@ while True:
 		for p in hits:
 			explosions.add(Explosion(p))
 
+	exploded = False
+
 	
+	for expl in explosions.sprites():
+		hits = hitBy(expl.p, myMissiles, TRIGGER)
+		if expl.inside(player.p) and not exploded:
+			exploded = True
+			explosions.add(Explosion(player.p))
+			player.rect.center = (-20, -20)
+			try:
+				playerGroup.remove(player)
+			except:
+				pass
+
+		if hits:
+			for p in hits:
+				explosions.add(Explosion(p))
+
+	if exploded:
+		player.explode = True
+
+
 
 	
 	if player.new:

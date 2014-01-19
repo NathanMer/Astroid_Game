@@ -5,7 +5,7 @@ from Vector import *
 class Missile(Orbiter):
 	def __init__(self, pos, rot, burn, Vi, g, center, surface):
 		Orbiter.__init__(self, Vector(pos.x, pos.y), Vector(Vi.x, Vi.y), g)
-		self.thrust = 0.5
+		self.thrust = 1
 		self.explode = False
 
 		self.surface = surface

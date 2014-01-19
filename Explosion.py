@@ -8,6 +8,7 @@ class Explosion(pygame.sprite.Sprite):
 		self.image = pygame.transform.scale(self.image, (60, 60))
 		self.rect = self.image.get_rect(center=p)
 		self.x, self.y = p
+		self.p = p
 		self.counter = 30
 
 	def inside(self, p):
