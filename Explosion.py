@@ -11,7 +11,7 @@ class Explosion(pygame.sprite.Sprite):
 		self.p = p
 		self.counter = 30
 		if createNew:
-			client.sendExplode(self.x, self.y)
+			client.sendExplode(int(self.x), int(self.y))
 
 	def inside(self, p):
 		return (Vector(p[0], p[1]) - Vector(self.x, self.y)).abs() < 60
