@@ -7,7 +7,11 @@ RAD = 0.017453292519943295
 
 class MyShip(Orbiter):
 	def __init__(self, center, rotSpeed, thrust, g):
+<<<<<<< HEAD
 		Orbiter.__init__(self, Vector(100, 0), Vector(0, -20), g)
+=======
+		Orbiter.__init__(self, Vector(100, 0), Vector(0, 20), g)
+>>>>>>> 45649d007564e5520d064817a9af07c910b8b0b4
 		self.timer = None
 		self.down = False
 		self.rotSpeed = rotSpeed
