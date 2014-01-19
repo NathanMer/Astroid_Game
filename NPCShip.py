@@ -9,7 +9,7 @@ class NPCShip(pygame.sprite.Sprite):
 		self.image = pygame.image.load("images/redShip.png")
 		self.image = pygame.transform.scale(self.image, (20, 20))
 		self.original = self.image
-		self.changeValues(x, y, rot)
+		self.changeValues(x, y, rot, fire)
 		self.fireImg = pygame.image.load("images/missileFire.png")
 		
 
