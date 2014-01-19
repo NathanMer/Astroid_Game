@@ -7,6 +7,7 @@ class Connection():
         self.c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def pickName(self, HOST, PORT, name):
+        """Get registered as a user in the server"""
         self.c.connect((HOST, PORT))
         self.c.sendall(name)
         if (self.c.recv(1) == "Y"):
@@ -18,16 +19,15 @@ class Connection():
 
     ##################################### RECIEVE ##########################
     def recieve(self):
-        self.recieveFromServer()
-        self.recieveFromUsers()
+        #self.recieveFromServer()
+        #self.recieveFromUsers()
+        pass
 
 
     ##################################### SEND #############################
     def send(self, message):
-        message = self.convertMessage(message)
+        #message = self.convertMessage(message)
         try:
             self.c.sendall(message)
-            for user in self.users:
-                self.users[user].sendall(message)
         except socket.error:
             pass
