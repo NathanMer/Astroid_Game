@@ -22,6 +22,10 @@ class Server():
             data = self.getData(user)
             if (data != ""):
                 self.send(data, user)
+                data = parse(data)
+                for d in data:
+                    if d["type"] == "R":
+                        self.users.pop(d["name"])
 
     def getNewConnections(self):
         """Checks for new users and connects with them"""
