@@ -24,5 +24,5 @@ class DumbMissile(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 
 	def inside(self, pos):
-		return (Vector(pos[0], pos[1]) - Vector(self.p[0], self.p[1])).abs() < self.trigger and armed
+		return (Vector(pos[0], pos[1]) - Vector(self.p[0], self.p[1])).abs() < self.trigger and self.armed
 
