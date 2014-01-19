@@ -2,6 +2,8 @@ import pygame, math
 from Orbiter import *
 from Vector import *
 
+IMG = pygame.image.load("images/missile.png")
+
 class DumbMissile(pygame.sprite.Sprite):
 	def __init__(self, x, y, rot, fire):
 		pygame.sprite.Sprite.__init__(self)
@@ -18,7 +20,7 @@ class DumbMissile(pygame.sprite.Sprite):
 
 		self.p = (x, y)
 
-		self.image = pygame.image.load("images/missile.png")
+		self.image = IMG
 		self.image = pygame.transform.scale(self.image, (20, 40))
 		self.image = pygame.transform.rotate(self.image, self.rotation + self.adjust)
 		self.rect = self.image.get_rect(center=self.p)
