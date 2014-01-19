@@ -1,16 +1,21 @@
-import Vector, Orbitor, Ship, Missile, Asteroid
+# import Vector, Orbiter, Ship, Missile, Asteroid
+from Vector import *
+from Orbiter import *
+from MyShip import *
+# from Asteroid import *
+# from Missile import *
 import pygame
 import os, sys
 
 ROTSPEED = 3.0
 THRUST = 1.0
 CENTER = (350, 350)
-G = 5.0
+G = 50000
 # startV
 
 
 pygame.init()
-screen = pygame.display.set_mode(700, 700))
+screen = pygame.display.set_mode((700, 700))
 pygame.display.set_caption("SpaceGame")
 
 
@@ -18,10 +23,14 @@ background = pygame.Surface(screen.get_size())
 background = background.convert()
 background.fill((0, 0, 0))
 
-gameClock = pygame.time.clock()
+# print "black?"
+
+gameClock = pygame.time.Clock()
 
 
-player = Ship(center, ROTSPEED, THRUST)
+player = MyShip(CENTER, ROTSPEED, THRUST, G)
+
+playerGroup = pygame.sprite.RenderPlain((player))
 
 #other ships
 #missiles
@@ -37,32 +46,40 @@ frame = 0
 while True:
 
 	#get keyboard events
-	for event in pygame.event.get:
-		if event = pygame.QUIT:
-			break
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+		
+			pygame.quit()
+			sys.exit()
 
-		elif event == pygame.KEYDOWN:
+		elif event.type == pygame.KEYDOWN:
 			pressed.append(event.key)
 
-		elif event == pygame.KEYUP:
+		elif event.type == pygame.KEYUP:
 			pressed.remove(event.key)
 
 
-		elif event == pygame.MOUSEBUTTONDOWN:
+		elif event.type == pygame.MOUSEBUTTONDOWN:
 			mouseDown = True
 
-		elif event == pygame.MOUSEBUTTONUP:
+		elif event.type == pygame.MOUSEBUTTONUP:
 			mouseDown = False
 
 	mouseLoc = pygame.mouse.get_pos()
+
+	# print "got input"
 
 	#do physics
 
 	# update sprites
 
+	playerGroup.update(pressed, mouseLoc, mouseDown)
 
-	frame += 1
-	gameClock.tick(60)
+	screen.blit(background, (0, 0))
+	playerGroup.draw(screen)
+	pygame.display.flip()
+
+
+	# frame += 1
+	gameClock.tick(6)
 	
-pygame.quit()
-sys.exit()
