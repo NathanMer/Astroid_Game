@@ -152,7 +152,7 @@ while True:
 
 	newExplo = []
 
-	myMissiles.update(thing, createNew=False)
+	myMissiles.update(newExplo, createNew=False)
 	explosions.update()
 
 

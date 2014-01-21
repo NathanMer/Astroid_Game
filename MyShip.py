@@ -85,7 +85,7 @@ class MyShip(Orbiter):
 			# print "missile fired", self.timer
 			self.down = False
 			self.new = True
-			self.reload = 30
+			self.reload = 15
 
 			x, y = mouseLoc
 

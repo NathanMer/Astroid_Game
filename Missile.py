@@ -33,7 +33,7 @@ class Missile(Orbiter):
 		return (Vector(pos[0], pos[1]) - Vector(self.p[0], self.p[1])).abs() < self.trigger and self.fuse<1
 				
 
-	def update(self, client):
+	def update(self, client, createNew=True):
 
 		if self.fuse <1:
 			self.explode = (self.getAltitude() <= self.surface)
@@ -62,7 +62,7 @@ class Missile(Orbiter):
 			self.kill()
 
 		self.p = (self.center[0] + self.position.x, self.center[1] + self.position.y)
-		if int(self.p[0]) >0 and int(self.p[1]) >0 and int(self.p[0]) < 1000 and int(self.p[1]) < 1000 :
+		if int(self.p[0]) >0 and int(self.p[1]) >0 and int(self.p[0]) < 1000 and int(self.p[1]) < 1000 and createNew:
 			client.sendMissile(int(self.p[0]), int(self.p[1]), (self.fuse<1), int(math.degrees(self.rotation))%360)
 
 
