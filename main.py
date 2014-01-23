@@ -9,7 +9,7 @@ from DumbMissile import *
 from Connection import *
 from Server import *
 from NPCShip import *
-# from multiprocessing import Process, Pipe
+
 
 import time
 import pygame
@@ -66,9 +66,6 @@ def hitBy(p, missiles, triggerRange):
                     missiles.remove(sp)
                     out.append(sp.rect.center)
                     return out
-
-
-
 
 
 pygame.init()
