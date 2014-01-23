@@ -8,4 +8,5 @@ try:
 	    ser.recieve()
 except KeyboardInterrupt:
 	ser.close()
+	print "\nexited cleanly"
 	sys.exit()
