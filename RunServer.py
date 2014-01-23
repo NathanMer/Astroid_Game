@@ -1,6 +1,11 @@
 from Server import *
+import sys
 
-ser = Server(9000)
+try:
+	ser = Server(9000)
 
-while True:
-    ser.recieve()
+	while True:
+	    ser.recieve()
+except KeyboardInterrupt:
+	ser.close()
+	sys.exit()

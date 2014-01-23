@@ -37,44 +37,47 @@ def namePick(ip,port,name, client, childPipe):
 # rep = raw_input("server? [Y, N]")
 # if rep =="y":
 # 	serve = Server(9000)
-client = Connection()
-name = raw_input("Name? [10 Character]")
-while len(name) < 10:
-	name = name + " "
-ip = raw_input("What Ip?")
-
-# if rep =="y": 
-# 	parent, child = Pipe()
-# 	t = Process(target=namePick, name="SecondThread", args=(ip, 9000, name, client, child))
-
-# 	t.start()
-# 	time.sleep(2)
-# 	print serve.recieve()
-# 	t.join(timeout=3)
-# 	flag = parent.recv()
-# else:
-flag = client.pickName(ip,9000,name)
-
-while not flag:
-	name = raw_input("Other Name? [10 Character]")
-
+try:
+	client = Connection()
+	name = raw_input("Name? [10 Character]")
 	while len(name) < 10:
 		name = name + " "
-	# if rep == "y":
+	ip = raw_input("What Ip?")
+
+	# if rep =="y": 
 	# 	parent, child = Pipe()
-	# 	t = Process(target=namePick, name="SecondThread", args=(ip, port, name, client, child))
+	# 	t = Process(target=namePick, name="SecondThread", args=(ip, 9000, name, client, child))
 
 	# 	t.start()
 	# 	time.sleep(2)
-	# 	serve.recieve()
+	# 	print serve.recieve()
 	# 	t.join(timeout=3)
 	# 	flag = parent.recv()
 	# else:
 	flag = client.pickName(ip,9000,name)
 
-print client.name
+	while not flag:
+		name = raw_input("Other Name? [10 Character]")
 
+		while len(name) < 10:
+			name = name + " "
+		# if rep == "y":
+		# 	parent, child = Pipe()
+		# 	t = Process(target=namePick, name="SecondThread", args=(ip, port, name, client, child))
 
+		# 	t.start()
+		# 	time.sleep(2)
+		# 	serve.recieve()
+		# 	t.join(timeout=3)
+		# 	flag = parent.recv()
+		# else:
+		flag = client.pickName(ip,9000,name)
+
+	print client.name
+
+except:
+	client.close()
+	sys.exit()
 
 ###############
 # startV
@@ -303,4 +306,10 @@ while True:
 	# if rep == "y":
 	# 	serve.recieve()
 	gameClock.tick(60)
+
+	
+except:
+	client.close()
+	pygame.quit()
+	sys.exit()
 	
